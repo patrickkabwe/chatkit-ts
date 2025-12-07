@@ -481,42 +481,7 @@ Generate a new attachment ID.
 generateAttachmentId(mime_type: string, context: TContext): string
 ```
 
-### Implementations
-
-#### DiskAttachmentStore
-
-```typescript
-class DiskAttachmentStore<TContext> extends AttachmentStore<TContext> {
-  constructor(baseDir?: string, baseUrl?: string)
-  
-  async storeFileData(attachmentId: string, data: Uint8Array): Promise<void>
-  async getFileData(attachmentId: string): Promise<Uint8Array | null>
-  getFileUrl(attachmentId: string): string
-}
-```
-
-#### AwsAttachmentStore
-
-```typescript
-class AwsAttachmentStore<TContext> extends AttachmentStore<TContext> {
-  constructor(config: AwsAttachmentStoreConfig)
-  
-  async getDownloadUrl(attachmentId: string): Promise<string>
-}
-
-interface AwsAttachmentStoreConfig {
-  bucket: string;
-  region: string;
-  keyPrefix?: string;
-  credentials?: {
-    accessKeyId: string;
-    secretAccessKey: string;
-  };
-  endpoint?: string;
-  baseUrl?: string;
-  urlExpirationSeconds?: number;
-}
-```
+**Note**: You must implement your own `AttachmentStore` class. No implementations are provided by the SDK.
 
 ## Widgets
 
