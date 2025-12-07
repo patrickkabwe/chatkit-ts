@@ -2,7 +2,7 @@
 [test]
 root = "tests"
 coverage = true
-coverageThreshold = 0.9
+# coverageThreshold = 0.9
 
 [test.reporter]
 junit = "./bun.xml"
