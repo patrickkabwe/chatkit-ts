@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.8](///compare/v0.1.7...v0.1.8) (2025-12-07)
+
+### Bug Fixes
+
+* Switch to explicit .js extensions in imports 5a7cee8
+
 ## [0.1.7](///compare/v0.1.6...v0.1.7) (2025-12-07)
 
 ### Bug Fixes
