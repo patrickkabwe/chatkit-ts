@@ -19,11 +19,11 @@
   },
   "npm": {
     "publish": true,
-    "skipChecks": true
+    "skipChecks": true,
+    "versionArgs": ["--allow-same-version"]
   },
   "plugins": {
     "@release-it/bumper": {
-      "in": "package.json",
       "out": [
         {
           "file": "package.json",
