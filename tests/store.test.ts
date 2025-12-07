@@ -6,7 +6,6 @@ import {
   Store
 } from "../src/store";
 import type {
-  AssistantMessageContent,
   AssistantMessageItem,
   Attachment,
   InferenceOptions,
@@ -30,7 +29,7 @@ function makeThread(
   return {
     id: threadId,
     title: "Test Thread",
-    createdAt: created,
+    created_at: created,
     metadata: { test: "test" }
   };
 }
@@ -41,26 +40,26 @@ function makeThreadItems(): ThreadItem[] {
   const userMsg: UserMessageItem = {
     type: "user_message",
     id: "msg_100000",
-    content: [{ text: "Hello!" } as UserMessageTextContent],
+    content: [{ text: "Hello!" }],
     attachments: [],
-    inferenceOptions: {} as InferenceOptions,
-    threadId: "test_thread",
-    createdAt: now
+    inference_options: {},
+    thread_id: "test_thread",
+    created_at: now
   };
 
   const assistantMsg: AssistantMessageItem = {
     type: "assistant_message",
     id: "msg_000001",
     content: [{ type: "output_text", text: "Hi there!", annotations: [] }],
-    threadId: "test_thread",
-    createdAt: new Date(now.getTime() + 1000)
+    thread_id: "test_thread",
+    created_at: new Date(now.getTime() + 1000)
   };
 
   const widget: WidgetItem = {
     id: "widget_1",
     type: "widget",
-    threadId: "test_thread",
-    createdAt: new Date(now.getTime() + 2000),
+    thread_id: "test_thread",
+    created_at: new Date(now.getTime() + 2000),
     widget: {
       type: "Card",
       children: [
@@ -132,7 +131,7 @@ class InMemoryStore extends Store<RequestContext> {
   ): Promise<void> {
     this.threads.set(thread.id, {
       thread,
-      createdAt: thread.createdAt,
+      createdAt: new Date(thread.created_at),
       userId: context.userId
     });
   }
@@ -177,7 +176,7 @@ class InMemoryStore extends Store<RequestContext> {
     const data = dataRows.map(r => r.item);
     const nextAfter = hasMore ? dataRows[dataRows.length - 1]!.item.id : null;
 
-    return { data, hasMore, after: nextAfter };
+    return { data, has_more: hasMore, after: nextAfter };
   }
 
   async saveAttachment(
@@ -250,7 +249,7 @@ class InMemoryStore extends Store<RequestContext> {
     const data = dataRows.map(r => r.thread);
     const nextAfter = hasMore ? dataRows[dataRows.length - 1]!.thread.id : null;
 
-    return { data, hasMore, after: nextAfter };
+    return { data, has_more: hasMore, after: nextAfter };
   }
 
   async addThreadItem(
@@ -258,12 +257,7 @@ class InMemoryStore extends Store<RequestContext> {
     item: ThreadItem,
     context: RequestContext
   ): Promise<void> {
-    let createdAt: Date;
-    if ("createdAt" in item && item.createdAt instanceof Date) {
-      createdAt = item.createdAt;
-    } else {
-      createdAt = new Date();
-    }
+    const createdAt = item.created_at ?? new Date();
     this.items.set(item.id, {
       item,
       threadId,
@@ -368,7 +362,7 @@ describe("InMemoryStore basic behavior", () => {
     const thread: ThreadMetadata = {
       id: "test_thread",
       title: null,
-      createdAt: new Date(),
+      created_at: new Date(),
       metadata: { test: "test" }
     };
     await store.saveThread(thread, DEFAULT_CONTEXT);
@@ -416,11 +410,11 @@ describe("InMemoryStore basic behavior", () => {
     const store = new InMemoryStore();
     const file: Attachment = {
       id: "file_1",
-      mimeType: "text/plain",
+      mime_type: "text/plain",
       name: "test.txt",
       type: "file",
-      uploadUrl: null,
-      previewUrl: null
+      upload_url: null,
+      preview_url: null
     };
     await store.saveAttachment(file, DEFAULT_CONTEXT);
     const loaded = await store.loadAttachment(file.id, DEFAULT_CONTEXT);
@@ -431,11 +425,11 @@ describe("InMemoryStore basic behavior", () => {
     const store = new InMemoryStore();
     const image: Attachment = {
       id: "image_1",
-      mimeType: "image/png",
+      mime_type: "image/png",
       name: "test.png",
       type: "image",
-      uploadUrl: null,
-      previewUrl: null
+      upload_url: null,
+      preview_url: null
     };
     await store.saveAttachment(image, DEFAULT_CONTEXT);
     const loaded = await store.loadAttachment(image.id, DEFAULT_CONTEXT);
@@ -454,7 +448,7 @@ describe("InMemoryStore basic behavior", () => {
 
     const page1 = await store.loadThreads(2, null, "asc", DEFAULT_CONTEXT);
     expect(page1.data.map(t => t.id)).toEqual(["thread1", "thread2"]);
-    expect(page1.hasMore).toBe(true);
+    expect(page1.has_more).toBe(true);
     expect(page1.after).toBe("thread2");
 
     const page2 = await store.loadThreads(
@@ -464,7 +458,7 @@ describe("InMemoryStore basic behavior", () => {
       DEFAULT_CONTEXT
     );
     expect(page2.data.map(t => t.id)).toEqual(["thread3"]);
-    expect(page2.hasMore).toBe(false);
+    expect(page2.has_more).toBe(false);
     expect(page2.after).toBeNull();
   });
 
@@ -478,27 +472,27 @@ describe("InMemoryStore basic behavior", () => {
         id: "msg1",
         content: [{ text: "A" }],
         attachments: [],
-        inferenceOptions: {} as InferenceOptions,
-        threadId: thread.id,
-        createdAt: now
+        inference_options: {},
+        thread_id: thread.id,
+        created_at: now
       },
       {
         type: "user_message",
         id: "msg2",
         content: [{ text: "B" }],
         attachments: [],
-        inferenceOptions: {} as InferenceOptions,
-        threadId: thread.id,
-        createdAt: new Date(now.getTime() + 1000)
+        inference_options: {},
+        thread_id: thread.id,
+        created_at: new Date(now.getTime() + 1000)
       },
       {
         type: "user_message",
         id: "msg3",
         content: [{ text: "C" }],
         attachments: [],
-        inferenceOptions: {} as InferenceOptions,
-        threadId: thread.id,
-        createdAt: new Date(now.getTime() + 2000)
+        inference_options: {},
+        thread_id: thread.id,
+        created_at: new Date(now.getTime() + 2000)
       }
     ];
     await store.saveThread(thread, DEFAULT_CONTEXT);
@@ -535,9 +529,9 @@ describe("InMemoryStore basic behavior", () => {
         id: `msg${i}`,
         content: [{ text: String(i) }],
         attachments: [],
-        inferenceOptions: {} as InferenceOptions,
-        threadId: thread.id,
-        createdAt: new Date(now.getTime() + i * 1000)
+        inference_options: {},
+        thread_id: thread.id,
+        created_at: new Date(now.getTime() + i * 1000)
       });
     }
     await store.saveThread(thread, DEFAULT_CONTEXT);
@@ -553,7 +547,7 @@ describe("InMemoryStore basic behavior", () => {
       DEFAULT_CONTEXT
     );
     expect(after.data.map(i => i.id)).toEqual(["msg2", "msg3", "msg4"]);
-    expect(after.hasMore).toBe(false);
+    expect(after.has_more).toBe(false);
     expect(after.after).toBeNull();
 
     const afterLimit = await store.loadThreadItems(
@@ -564,7 +558,7 @@ describe("InMemoryStore basic behavior", () => {
       DEFAULT_CONTEXT
     );
     expect(afterLimit.data.map(i => i.id)).toEqual(["msg0", "msg1"]);
-    expect(afterLimit.hasMore).toBe(true);
+    expect(afterLimit.has_more).toBe(true);
     expect(afterLimit.after).toBe("msg1");
   });
 
@@ -576,14 +570,14 @@ describe("InMemoryStore basic behavior", () => {
       type: "assistant_message",
       id: "msg_000001",
       content: [],
-      threadId: thread.id,
-      createdAt: now
+      thread_id: thread.id,
+      created_at: now
     };
     const widget: WidgetItem = {
       id: "widget_1",
       type: "widget",
-      threadId: thread.id,
-      createdAt: new Date(now.getTime() + 1000),
+      thread_id: thread.id,
+      created_at: new Date(now.getTime() + 1000),
       widget: { type: "Card", children: [{ type: "Text", value: "Test" }] }
     };
     await store.saveThread(thread, DEFAULT_CONTEXT);
@@ -595,11 +589,16 @@ describe("InMemoryStore basic behavior", () => {
       content: [{ type: "output_text", text: "This is an assistant message.", annotations: [] }]
     };
     await store.saveItem(thread.id, updatedAssistant, DEFAULT_CONTEXT);
-    const loadedAssistant = (await store.loadItem(
+    const loadedAssistantItem = await store.loadItem(
       thread.id,
       assistantMsg.id,
       DEFAULT_CONTEXT
-    )) as AssistantMessageItem;
+    );
+    expect(loadedAssistantItem.type).toBe("assistant_message");
+    if (loadedAssistantItem.type !== "assistant_message") {
+      throw new Error("Expected assistant message");
+    }
+    const loadedAssistant = loadedAssistantItem;
     expect(loadedAssistant.id).toBe(assistantMsg.id);
     expect(loadedAssistant.content[0]).toEqual({
       type: "output_text",
@@ -608,11 +607,16 @@ describe("InMemoryStore basic behavior", () => {
     });
 
     await store.saveItem(thread.id, widget, DEFAULT_CONTEXT);
-    const loadedWidget = (await store.loadItem(
+    const loadedWidgetItem = await store.loadItem(
       thread.id,
       widget.id,
       DEFAULT_CONTEXT
-    )) as WidgetItem;
+    );
+    expect(loadedWidgetItem.type).toBe("widget");
+    if (loadedWidgetItem.type !== "widget") {
+      throw new Error("Expected widget");
+    }
+    const loadedWidget = loadedWidgetItem;
     expect(loadedWidget.id).toBe(widget.id);
   });
 
@@ -747,7 +751,7 @@ describe("InMemoryStore ID generators", () => {
 
 describe("AttachmentStore", () => {
   it("generateAttachmentId returns attachment ID", () => {
-    const { AttachmentStore, defaultGenerateId } = require("../src/store");
+    const { AttachmentStore } = require("../src/store");
     
     class TestAttachmentStore extends AttachmentStore {
       async deleteAttachment(): Promise<void> {}

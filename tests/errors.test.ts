@@ -95,7 +95,7 @@ describe("CustomStreamError", () => {
 
 describe("ErrorCode enum", () => {
   it("has STREAM_ERROR code", () => {
-    expect(ErrorCode.STREAM_ERROR).toBe("stream.error");
+    expect(ErrorCode.STREAM_ERROR).toBe("stream.error" as ErrorCode);
   });
 });
 

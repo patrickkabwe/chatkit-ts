@@ -5,7 +5,7 @@ import {
   QueueEventWrapper,
   queueEventIterator
 } from "../src/helpers/async-queue";
-import type { ThreadStreamEvent } from "../src/types";
+import type { ThreadItemAddedEvent, ThreadItemDoneEvent, ThreadStreamEvent } from "../src/types";
 
 describe("AsyncQueue", () => {
   it("enqueues and dequeues items in order", async () => {
@@ -224,7 +224,7 @@ describe("queueEventIterator", () => {
 
     expect(wrappers).toHaveLength(2);
     expect(wrappers[0]).toBeInstanceOf(QueueEventWrapper);
-    expect(wrappers[0].event.type).toBe("thread.item.added");
+    expect((wrappers[0].event as ThreadItemAddedEvent<any>).type).toBe("thread.item.added");
     expect(wrappers[1]).toBeInstanceOf(QueueEventWrapper);
     expect(wrappers[1].event).toBeInstanceOf(QueueCompleteSentinel);
   });
@@ -263,8 +263,9 @@ describe("queueEventIterator", () => {
 
     expect(wrappers).toHaveLength(1);
     expect(wrappers[0]).toBeInstanceOf(QueueEventWrapper);
-    if (wrappers[0].event.type === "thread.item.done") {
-      expect(wrappers[0].event.item.id).toBe("widget_1");
+    const event = wrappers[0].event as ThreadItemDoneEvent<any>;
+    if (event?.type === "thread.item.done") {
+      expect(event.item.id).toBe("widget_1");
     }
   });
 });

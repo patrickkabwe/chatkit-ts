@@ -9,6 +9,7 @@ dist
 # code coverage
 coverage
 *.lcov
+bun.xml
 
 # logs
 logs
