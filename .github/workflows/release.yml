@@ -97,8 +97,17 @@ jobs:
         with:
           bun-version: latest
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          registry-url: 'https://registry.npmjs.org'
+
       - name: Install dependencies
         run: bun install --frozen-lockfile
+
+      - name: Build project
+        run: bun run build
 
       - name: Configure Git
         run: |
@@ -108,6 +117,7 @@ jobs:
       - name: Run release-it
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           VERSION_TYPE="${{ github.event.inputs.version }}"
           bun run release-it $VERSION_TYPE --ci

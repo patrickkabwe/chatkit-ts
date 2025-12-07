@@ -17,7 +17,8 @@
     "releaseNotes": null
   },
   "npm": {
-    "publish": false
+    "publish": true,
+    "publishPath": "."
   },
   "plugins": {
     "@release-it/conventional-changelog": {
