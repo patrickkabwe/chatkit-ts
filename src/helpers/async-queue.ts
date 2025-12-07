@@ -1,4 +1,4 @@
-import type { ThreadStreamEvent } from "../types";
+import type { ThreadStreamEvent } from "../types.js";
 
 /**
  * Sentinel value used to mark queue completion.

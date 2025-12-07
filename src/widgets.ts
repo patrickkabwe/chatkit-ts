@@ -1,7 +1,7 @@
 import { readFileSync } from "fs";
 import { isAbsolute, resolve, sep } from "path";
-import type { ActionConfig } from "./types";
-import type { IconName } from "./icons";
+import type { ActionConfig } from "./types.js";
+import type { IconName } from "./icons.js";
 
 /**
  * Color values for light and dark themes.
