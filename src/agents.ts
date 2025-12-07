@@ -644,13 +644,13 @@ type RunStreamedFn<C> = (
   options: { context: AgentContext<C> }
 ) => RunResultStreaming | Promise<RunResultStreaming>;
 
-export type RunnerLike<C = unknown> =
+type RunnerLike<C = unknown> =
   | RunStreamedFn<C>
   | {
       runStreamed?: RunStreamedFn<C>;
     };
 
-function resolveRunner<C>(runner: RunnerLike<C>): RunStreamedFn<C> {
+export function resolveRunner<C>(runner: RunnerLike<C>): RunStreamedFn<C> {
   if (typeof runner === "function") {
     return runner;
   }
