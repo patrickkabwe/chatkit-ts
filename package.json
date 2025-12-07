@@ -1,6 +1,6 @@
 {
   "name": "chatkit-ts",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "TypeScript port of the OpenAI ChatKit Python SDK for TypeScript/JS developers.",
   "type": "module",
   "main": "dist/index.js",

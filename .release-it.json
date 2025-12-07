@@ -17,11 +17,9 @@
     "autoGenerate": true,
     "releaseNotes": null
   },
-  "npm": {
-    "publish": true,
-    "publishPath": ".",
-    "skipChecks": true,
-    "version": false
+  "npm": false,
+  "hooks": {
+    "after:bump": "npm run build && npm publish"
   },
   "plugins": {
     "@release-it/bumper": {
