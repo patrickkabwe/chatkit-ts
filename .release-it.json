@@ -17,9 +17,9 @@
     "autoGenerate": true,
     "releaseNotes": null
   },
-  "npm": false,
-  "hooks": {
-    "after:bump": "npm run build && npm publish"
+  "npm": {
+    "publish": true,
+    "skipChecks": true
   },
   "plugins": {
     "@release-it/bumper": {
@@ -36,7 +36,31 @@
       ]
     },
     "@release-it/conventional-changelog": {
-      "preset": "angular",
+      "preset": {
+        "name": "conventionalcommits",
+        "types": [
+          {
+            "type": "feat",
+            "section": "✨ Features"
+          },
+          {
+            "type": "perf",
+            "section": "💨 Performance Improvements"
+          },
+          {
+            "type": "fix",
+            "section": "🐛 Bug Fixes"
+          },
+          {
+            "type": "chore(deps)",
+            "section": "🛠️ Dependency Upgrades"
+          },
+          {
+            "type": "docs",
+            "section": "📚 Documentation"
+          }
+        ]
+      },
       "infile": "CHANGELOG.md"
     }
   }
