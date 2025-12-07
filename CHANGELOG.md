@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.1.5](///compare/v0.1.3...v0.1.5) (2025-12-07)
+
+### Bug Fixes
+
+* regenerate lockfiles to resolve duplicate key error cc9457e
+* update agents.test.ts to use @openai/agents package 678aeb2
+* update agents.ts to use @openai/agents package 62f75f0
+
 ## [0.1.3](///compare/v0.1.1...v0.1.3) (2025-12-07)
 
 ## [0.1.2](///compare/v0.1.1...v0.1.2) (2025-12-07)

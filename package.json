@@ -1,6 +1,6 @@
 {
   "name": "chatkit-ts",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "TypeScript port of the OpenAI ChatKit Python SDK for TypeScript/JS developers.",
   "type": "module",
   "main": "dist/index.js",
@@ -31,8 +31,8 @@
     "@types/node": "^22.7.4",
     "release-it": "^19.0.6",
     "typescript": "^5.9.3"
-},
-"peerDependencies": {
+  },
+  "peerDependencies": {
     "@openai/agents": "*",
     "@aws-sdk/client-s3": "*",
     "@aws-sdk/s3-request-presigner": "*"
