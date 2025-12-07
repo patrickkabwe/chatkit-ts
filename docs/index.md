@@ -27,8 +27,7 @@ ChatKit TS is a TypeScript SDK that enables developers to build conversational A
 
 - 🔄 **Real-time Streaming**: Server-sent events (SSE) for live updates
 - 🎨 **Rich Widgets**: Card, ListView, Form, Chart, and 20+ component types
-- 💾 **Flexible Storage**: Abstract store interface with multiple implementations
-- 📎 **Attachment Support**: Disk-based and AWS S3 attachment stores
+- 💾 **Flexible Storage**: Pluggable storage architecture - implement your own store
 - 🤖 **Agent Integration**: Helpers for OpenAI Agents SDK
 - 🔒 **Type Safe**: Full TypeScript definitions for all APIs
 
@@ -51,15 +50,14 @@ pnpm add chatkit-ts
 ### Peer Dependencies
 
 - `@openai/agents`: Required for agent integration
-- `@aws-sdk/client-s3` and `@aws-sdk/s3-request-presigner`: Required for AWS S3 attachment store
 
 ## Quick Start
 
 ### Basic Server Setup
 
 ```typescript
-import { ChatKitServer } from "chatkit-ts";
-import { InMemoryStore } from "./store"; // Your store implementation
+import { ChatKitServer, Store } from "chatkit-ts";
+import { MyStore } from "./store"; // Your custom store implementation
 
 class MyServer extends ChatKitServer {
   async respond(thread, userMessage, context) {
@@ -68,7 +66,8 @@ class MyServer extends ChatKitServer {
   }
 }
 
-const store = new InMemoryStore();
+// You must implement your own Store class
+const store = new MyStore();
 const server = new MyServer(store);
 ```
 
@@ -133,13 +132,7 @@ See [Widgets Documentation](./widgets.md) for complete details.
 
 ### Stores
 
-Stores handle persistence of threads, messages, and attachments. You can implement custom stores or use provided ones:
-
-- **Abstract Store**: Define your own persistence layer
-- **Disk Attachment Store**: File-based attachment storage
-- **AWS S3 Attachment Store**: Cloud-based attachment storage
-
-See [Stores Documentation](./stores.md) for implementation details.
+Stores handle persistence of threads, messages, and attachments. You must implement your own `Store` and optionally `AttachmentStore` classes to provide persistence. See the API Reference for the abstract interfaces you need to implement.
 
 ### Streaming
 
@@ -217,29 +210,7 @@ constructor(
 
 ### Store
 
-Abstract base class for persistence.
-
-#### Required Methods
-
-- `loadThread(threadId, context)`: Load thread metadata
-- `saveThread(thread, context)`: Save thread metadata
-- `loadThreadItems(threadId, after, limit, order, context)`: Load paginated items
-- `addThreadItem(threadId, item, context)`: Add new item
-- `saveItem(threadId, item, context)`: Update existing item
-- `deleteThreadItem(threadId, itemId, context)`: Remove item
-- `loadAttachment(attachmentId, context)`: Load attachment metadata
-- `saveAttachment(attachment, context)`: Save attachment metadata
-- `deleteAttachment(attachmentId, context)`: Remove attachment
-- `loadThreads(limit, after, order, context)`: List all threads
-
-### AttachmentStore
-
-Abstract base class for file storage.
-
-#### Methods
-
-- `createAttachment(params, context)`: Create attachment with upload URL
-- `deleteAttachment(attachmentId, context)`: Remove attachment file
+Abstract base class for persistence. You must implement your own store class extending `Store`. See the API Reference for the complete interface.
 
 ### Widget System
 
@@ -255,7 +226,7 @@ See [Agents Documentation](./agents.md) for agent integration details.
 
 ```typescript
 import { ChatKitServer, ThreadStreamEvent } from "chatkit-ts";
-import { InMemoryStore } from "./store";
+import { MyStore } from "./store"; // Your custom store implementation
 
 class MyChatServer extends ChatKitServer {
   async respond(thread, userMessage, context) {
@@ -347,17 +318,7 @@ async function* respond(thread, userMessage, context) {
 
 ### Custom Store Implementation
 
-```typescript
-import { Store, ThreadMetadata, ThreadItem, Attachment } from "chatkit-ts";
-
-class MyCustomStore extends Store {
-  async loadThread(threadId: string, context: any) {
-    // Your implementation
-  }
-  
-  // ... implement all required methods
-}
-```
+You must implement your own `Store` class. See the API Reference for the complete `Store` interface that you need to implement.
 
 ### Error Handling
 
