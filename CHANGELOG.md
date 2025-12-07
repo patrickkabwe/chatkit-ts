@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.1.6](///compare/v0.1.5...v0.1.6) (2025-12-07)
+
+### Bug Fixes
+
+* Update exports in package.json and moduleResolution in tsconfig e1d1840
+
 ## [0.1.5](///compare/v0.1.3...v0.1.5) (2025-12-07)
 
 ### Bug Fixes
