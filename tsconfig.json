@@ -11,7 +11,7 @@
     "rootDir": "src",
     "esModuleInterop": true,
     "resolveJsonModule": true,
-    "types": ["node", "vitest", "bun"]
+    "types": ["node", "bun"]
   },
   "include": ["src"],
   "exclude": ["dist", "node_modules", "tests"]

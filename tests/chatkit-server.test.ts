@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect } from "bun:test";
 import { ChatKitServer } from "../src/server";
 import { Store } from "../src/store";
 import type {
