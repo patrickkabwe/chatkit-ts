@@ -25,7 +25,7 @@ import type {
   Annotation
 } from "./types";
 import type { WidgetRoot, Text as TextWidget } from "./widgets";
-import type { AgentInputItem, StreamEvent } from "@openai/agents-core";
+import type { AgentInputItem, StreamEvent } from "@openai/agents";
 
 
 export interface RunResultStreaming {
