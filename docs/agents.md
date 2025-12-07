@@ -28,7 +28,7 @@ The agent integration helpers bridge ChatKit's thread model with the OpenAI Agen
 
 ```typescript
 import { respondWithAgent, ThreadItemConverter } from "chatkit-ts";
-import { Agent, Runner } from "@openai/agents-core";
+import { Agent, Runner } from "@openai/agents";
 
 class MyServer extends ChatKitServer {
   private agent: Agent;

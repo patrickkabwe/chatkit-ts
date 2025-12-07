@@ -20,7 +20,7 @@ import type {
   ThreadItem
 } from "../src/types";
 import type { Card, Text } from "../src/widgets";
-import { StreamEvent } from "@openai/agents-core";
+import { StreamEvent } from "@openai/agents";
 
 function makeThread(): ThreadMetadata {
   return {

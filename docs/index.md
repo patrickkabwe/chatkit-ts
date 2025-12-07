@@ -50,7 +50,7 @@ pnpm add chatkit-ts
 
 ### Peer Dependencies
 
-- `@openai/agents-core`: Required for agent integration
+- `@openai/agents`: Required for agent integration
 - `@aws-sdk/client-s3` and `@aws-sdk/s3-request-presigner`: Required for AWS S3 attachment store
 
 ## Quick Start
@@ -317,7 +317,7 @@ for await (const event of streamWidget(thread, generateWidget())) {
 
 ```typescript
 import { respondWithAgent, ThreadItemConverter } from "chatkit-ts";
-import { Agent } from "@openai/agents-core";
+import { Agent } from "@openai/agents";
 
 class MyConverter extends ThreadItemConverter {
   async attachmentToMessageContent(attachment) {
