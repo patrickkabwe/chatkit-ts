@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.2.0](///compare/v0.1.8...v0.2.0) (2025-12-07)
+
+### Bug Fixes
+
+* Remove AWS S3 attachment store documentation and deps 50e1180
+
 ## [0.1.8](///compare/v0.1.7...v0.1.8) (2025-12-07)
 
 ### Bug Fixes
