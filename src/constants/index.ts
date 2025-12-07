@@ -1,4 +1,4 @@
-import type { Handler, LoadingBehavior } from "../types";
+import type { Handler, LoadingBehavior } from "../types.js";
 
 // Server constants
 export const DEFAULT_PAGE_SIZE = 20;

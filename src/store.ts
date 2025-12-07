@@ -1,4 +1,4 @@
-import type { Attachment, Page, ThreadItem, ThreadMetadata } from "./types";
+import type { Attachment, Page, ThreadItem, ThreadMetadata } from "./types.js";
 
 export type StoreItemType =
   | "thread"

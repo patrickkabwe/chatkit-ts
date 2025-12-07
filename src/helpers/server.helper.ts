@@ -1,5 +1,5 @@
-import type { StoreItemType } from "../store";
-import { defaultGenerateId } from "../store";
+import type { StoreItemType } from "../store.js";
+import { defaultGenerateId } from "../store.js";
 import type {
   ThreadItemAddedEvent,
   ThreadItemDoneEvent,
@@ -9,13 +9,13 @@ import type {
   WidgetItem,
   WidgetRootUpdated,
   WidgetStreamingTextValueDelta
-} from "../types";
+} from "../types.js";
 import type {
   WidgetComponent,
   WidgetComponentBase,
   WidgetRoot,
   Text
-} from "../widgets";
+} from "../widgets.js";
 
 function isStreamingText(component: WidgetComponentBase): component is Text {
   return (

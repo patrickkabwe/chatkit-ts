@@ -5,8 +5,8 @@ import {
   QueueItem,
   queueEventIterator,
   streamWidget
-} from "./helpers";
-import type { StoreItemType } from "./store";
+} from "./helpers/index.js";
+import type { StoreItemType } from "./store.js";
 import type {
   ThreadMetadata,
   ThreadStreamEvent,
@@ -23,8 +23,8 @@ import type {
   TaskItem,
   Attachment,
   Annotation
-} from "./types";
-import type { WidgetRoot, Text as TextWidget } from "./widgets";
+} from "./types.js";
+import type { WidgetRoot, Text as TextWidget } from "./widgets.js";
 import type { AgentInputItem, StreamEvent } from "@openai/agents";
 
 

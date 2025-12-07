@@ -1,4 +1,4 @@
-import type { Store, AttachmentStore } from "./store";
+import type { Store, AttachmentStore } from "./store.js";
 import type {
     Attachment,
     AssistantMessageContent,
@@ -23,15 +23,15 @@ import type {
     UserMessageInput,
     UserMessageItem,
     WidgetItem
-} from "./types";
-import type { ThreadMetadata, ThreadItem } from "./types";
-import { logger } from "./logger";
-import { CustomStreamError, StreamError } from "./errors";
-import { isStreamingReq } from "./helpers";
+} from "./types.js";
+import type { ThreadMetadata, ThreadItem } from "./types.js";
+import { logger } from "./logger.js";
+import { CustomStreamError, StreamError } from "./errors.js";
+import { isStreamingReq } from "./helpers/index.js";
 import {
     DEFAULT_PAGE_SIZE,
     DEFAULT_ERROR_MESSAGE
-} from "./constants";
+} from "./constants/index.js";
 
 // --- ChatKitServer ---
 
